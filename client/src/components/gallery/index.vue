@@ -1,0 +1,61 @@
+<template>
+<div class="gallery">
+    <h2>相册</h2>
+    <ul>
+        <li>
+            <a href="javascript:;">
+                <img src="./text02.jpg" alt="">
+            </a>
+        </li>
+    </ul>
+</div>
+</template>
+
+<script>
+    export default {
+        name: "gallery",
+        data(){
+            return{}
+        }
+    }
+</script>
+
+<style scoped lang="less">
+.gallery{
+    background: rgba(255, 255, 255, 0.5);
+    margin-bottom: 20px;
+    overflow: hidden;
+
+    h2 {
+        color: #333;
+        font-size: 14px;
+        line-height: 30px;
+        padding-left: 20px;
+        background: #fff;
+    }
+    ul{
+        padding: 10px;
+        overflow: hidden;
+        list-style: none;
+        li{
+            width: 32%;
+            overflow: hidden;
+            float: left;
+            height: 80px;
+            margin-bottom: 2px;
+            margin-right: 2px;
+            a{
+                text-decoration: none;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    transition: all .5s;
+                    &:hover{
+                        transform: scale(1.05);
+                    }
+                }
+            }
+        }
+    }
+}
+</style>

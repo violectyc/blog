@@ -73,11 +73,11 @@
                 img {
                     width: 100%;
                     cursor: pointer;
-                }
-
-                img:hover {
-                    transform: scale(1.05);
                     transition: all .5s ease;
+
+                    &:hover {
+                        transform: scale(1.05);
+                    }
                 }
             }
         }

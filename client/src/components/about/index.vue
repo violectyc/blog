@@ -37,6 +37,10 @@
         div{
             padding: 10px;
             overflow: hidden;
+            p{
+                font-size: 14px;
+                line-height: 26px;
+            }
             i{
                 width: 120px;
                 float: left;

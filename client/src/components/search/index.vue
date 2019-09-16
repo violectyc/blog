@@ -27,7 +27,7 @@
         align-items: center;
         flex-wrap: nowrap;
         font-size: 0;
-
+        margin-bottom: 20px;
         & /deep/ .el-input__inner {
             border-radius: 0;
             border: 1px solid #000000;

@@ -10,6 +10,7 @@ const usersRouter = require('./routes/users');
 const messageRouter = require('./routes/message');
 const uploadRouter = require('./routes/upload');
 const articleRouter = require('./routes/article');
+const galleryRouter = require('./routes/gallery');
 const {key} = require('./config');
 const app = express();
 app.use(cors());
@@ -46,6 +47,7 @@ app.use('/user', usersRouter);
 app.use('/message', messageRouter);
 app.use('/upload', uploadRouter);
 app.use('/article', articleRouter);
+app.use('/agllery', galleryRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));

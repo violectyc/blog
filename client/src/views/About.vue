@@ -16,7 +16,19 @@
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
                         <font style="font-size: 18px">{{userInfo.NickName}}的博客</font>
-                        <el-button style="float: right; padding: 3px 0" type="text" @click="editUserInfo">编辑</el-button>
+<!--                        <el-button style="float: right; padding: 3px 0" type="text" @click="editUserInfo">编辑</el-button>-->
+                        <el-dropdown style="float: right; padding: 3px 0">
+  <span class="el-dropdown-link" >
+    下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+  </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>黄金糕</el-dropdown-item>
+                                <el-dropdown-item>狮子头</el-dropdown-item>
+                                <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                                <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+                                <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
                     </div>
                     <div class="text item">
                         <ul>

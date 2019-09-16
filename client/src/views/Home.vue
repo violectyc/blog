@@ -3,7 +3,10 @@
         <Layout>
             <template v-slot:right>
                 <About v-if="userInfo"/>
+                <Gallery/>
                 <Search @keyword="handleSearch"/>
+                <Category/>
+                <Recommend/>
             </template>
             <template v-slot:left>
                 <router-view/>
@@ -26,6 +29,9 @@
     import About from '@/components/about'
     import ArticleList from '@/components/article-list'
     import Search from '@/components/search'
+    import Category from '@/components/category'
+    import Recommend from '@/components/recommend'
+    import Gallery from '@/components/gallery'
     import {current, getArticleList} from '@/service'
     import {Message} from 'element-ui'
     import {mapState} from "vuex";
@@ -53,7 +59,11 @@
         components: {
             Layout,
             About,
-            ArticleList, Search
+            ArticleList,
+            Search,
+            Category,
+            Recommend,
+            Gallery
         },
         methods: {
             _getCurrent() {
@@ -61,7 +71,7 @@
                     console.log('home');
                     if (res.data.err_code * 1 == 0) {
                         this.$store.commit('setUser', res.data.data);
-                         localStorage.setItem('userInfo', JSON.stringify(res.data.data));
+                        localStorage.setItem('userInfo', JSON.stringify(res.data.data));
 
                     }
                 })

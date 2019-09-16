@@ -1,13 +1,21 @@
 <template>
-    <div>gallery</div>
+    <div class="gallery">gallery</div>
 </template>
 
 <script>
     export default {
-        name: "Gallery"
+        name: "Gallery",
+        data(){
+            return{}
+        }
     }
 </script>
 
 <style scoped lang="less">
-
+.gallery{
+    width: 1000px;
+    max-width: 1000px;
+    background: #ffffff;
+    margin: 0 auto;
+}
 </style>

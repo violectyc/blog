@@ -3,7 +3,7 @@
 
         <Layout>
             <template v-slot:right>
-                <About/>
+                <Tags/>
             </template>
             <template v-slot:left>
                 <div class="edit">
@@ -18,7 +18,7 @@
 
 <script>
     import Layout from '@/components/layout'
-    import About from '@/components/about'
+    import Tags from '@/components/tags'
     import ArticleList from '@/components/article-list'
 
     export default {
@@ -27,7 +27,7 @@
             return {}
         },
         components: {
-            Layout, About, ArticleList
+            Layout, Tags, ArticleList
         },
         methods: {
             toWrite() {

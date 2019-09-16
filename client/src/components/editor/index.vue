@@ -29,7 +29,7 @@
             </el-form-item>
             <div class="btn-group">
                 <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                <el-button>取消</el-button>
+                <el-button @click="goBack">取消</el-button>
             </div>
         </el-form>
     </div>
@@ -67,6 +67,9 @@
                 if (val !== '') {
                     this.form.articleImg = val;
                 }
+            },
+            goBack(){
+                this.$router.go(-1);
             }
         }
     }
@@ -74,10 +77,14 @@
 
 <style scoped lang="less">
     .editor {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        transform: translate(50%,0%);
         width: 1000px;
         max-width: 1000px;
         background: #ffffff;
-        margin: 0 auto;
         padding: 15px;
 
         .editor-wrap {

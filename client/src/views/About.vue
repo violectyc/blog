@@ -16,17 +16,15 @@
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
                         <font style="font-size: 18px">{{userInfo.NickName}}的博客</font>
-<!--                        <el-button style="float: right; padding: 3px 0" type="text" @click="editUserInfo">编辑</el-button>-->
-                        <el-dropdown style="float: right; padding: 3px 0">
-  <span class="el-dropdown-link" >
-    下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+                        <!--                        <el-button style="float: right; padding: 3px 0" type="text" @click="editUserInfo">编辑</el-button>-->
+                        <el-dropdown style="float: right; padding: 3px 0" @command="handleCommand">
+  <span class="el-dropdown-link">
+    编辑<i class="el-icon-arrow-down el-icon--right"></i>
   </span>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item>黄金糕</el-dropdown-item>
-                                <el-dropdown-item>狮子头</el-dropdown-item>
-                                <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                                <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-                                <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+                                <el-dropdown-item command="editUserInfo">编辑用户信息</el-dropdown-item>
+                                <el-dropdown-item command="writeArticle">写文章</el-dropdown-item>
+                                <el-dropdown-item command="addGallery">添加相册</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </div>
@@ -64,7 +62,7 @@
             return {}
         },
         mounted() {
-            this.$refs.about.style.height=document.documentElement.clientHeight+'px';
+            this.$refs.about.style.height = document.documentElement.clientHeight + 'px';
         },
         components: {
             Layout
@@ -98,8 +96,15 @@
                     console.log(err);
                 });
             },
-            editUserInfo() {
-                this.$router.push('/about/userInfo');
+            handleCommand(commend) {
+                if (commend === 'editUserInfo') {
+
+                    this.$router.push('/about/userInfo');
+                } else if (commend === 'writeArticle') {
+                    this.$router.push('/article/editor');
+                } else if (commend === 'addGallery') {
+
+                }
             }
         }
     }
@@ -111,6 +116,7 @@
         max-width: 1000px;
         margin: 0 auto;
         height: 100%;
+
         .btn-wrap {
             overflow: hidden;
             box-sizing: border-box;
@@ -151,6 +157,7 @@
             max-width: 1000px;
             margin: 0 auto;
             height: 100%;
+
             ul {
                 li {
                     list-style: none;

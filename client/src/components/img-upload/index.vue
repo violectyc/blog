@@ -5,8 +5,11 @@
             :auto-upload="autoUpload"
             :show-file-list="true"
             :before-upload="beforeAvatarUpload">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        <i v-if="isShow" class="el-icon-plus avatar-uploader-icon"></i>
+        <template  v-for="item in imgList">
+            <img :src="item" class="avatar">
+        </template>
+
     </el-upload>
 </template>
 
@@ -16,11 +19,30 @@
 
     export default {
         name: "img-upload",
+        props: {
+            only: {
+                type: Boolean,
+                default: false
+            }
+        },
+        computed: {
+            isShow() {
+                if (!this.isOnly && this.imgList.length > 0) {
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        },
         data() {
             return {
-                imageUrl: '',
-                autoUpload: true
+                autoUpload: true,
+                imgList: [],
+                isOnly:false
             };
+        },
+        created(){
+            this.isOnly = this.only;
         },
         methods: {
             beforeAvatarUpload(file) {
@@ -30,8 +52,8 @@
                     const {err_code, name, filename, message} = res.data;
                     if (err_code * 1 === 0) {
                         this.$emit('upload', filename);
+                        this.imgList.push(name);
                         console.log(res);
-                        this.imageUrl = name;
                         Message({
                             type: 'success',
                             message: message
@@ -55,25 +77,33 @@
         cursor: pointer;
         position: relative;
         overflow: hidden;
+
+        .avatar-uploader-icon {
+            box-sizing: border-box;
+            border: 1px dashed #d9d9d9;
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            float: left;
+            margin: 23px;
+        }
+
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+            float: left;
+            margin: 23px;
+        }
     }
 
     .avatar-uploader .el-upload:hover {
         border-color: #409EFF;
     }
 
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 178px;
-        height: 178px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
 
-    .avatar {
-        width: 178px;
-        height: 178px;
-        display: block;
-    }
 </style>

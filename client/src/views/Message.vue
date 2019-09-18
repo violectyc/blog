@@ -6,15 +6,16 @@
             </template>
             <template v-slot:left>
                 <div class="message">
-                    <div v-for="model in list" :key="model._id">
-                        <span class="img"><img :src="model.Avatar" alt=""></span>
-                        <div class="text">
-                            <p><span class="username">{{model.UserName}}</span> <span
-                                    class="date">{{model.Created | myDate}}</span>
-                            </p>
-                            <p class="content">{{model.Content}}</p>
-                        </div>
-                    </div>
+                    <!--                    <div v-for="model in list" :key="model._id">-->
+                    <!--                        <span class="img"><img :src="model.Avatar" alt=""></span>-->
+                    <!--                        <div class="text">-->
+                    <!--                            <p><span class="username">{{model.UserName}}</span> <span-->
+                    <!--                                    class="date">{{model.Created | myDate}}</span>-->
+                    <!--                            </p>-->
+                    <!--                            <p class="content">{{model.Content}}</p>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <CommentsList :list="list"/>
                     <div class="pagination">
                         <el-pagination
                                 background
@@ -24,24 +25,7 @@
                                 :total="total">
                         </el-pagination>
                     </div>
-                    <!--                    message-->
-                    <div class="put-message">
-                        <el-form ref="form" label-width="80px">
-                            <el-form-item label="您的姓名">
-                                <el-input v-model="UserName"></el-input>
-                            </el-form-item>
-                            <el-form-item label="您的邮箱">
-                                <el-input v-model="Email"></el-input>
-                            </el-form-item>
-                            <el-form-item label="留言内容">
-                                <el-input v-model="Content" type="textarea" rows="5"></el-input>
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" @click="handleClick">立即创建</el-button>
-                                <el-button @click="reset">取消</el-button>
-                            </el-form-item>
-                        </el-form>
-                    </div>
+                    <PutMessage @putMessage="handleClick"/>
                 </div>
             </template>
         </layout>
@@ -50,38 +34,33 @@
 
 <script>
     import Layout from '@/components/layout'
+    import PutMessage from '@/components/put-message'
+    import CommentsList from '@/components/comments-list'
     import {putMessage, getMessage} from '@/service'
     import {Message} from 'element-ui'
-    import {formate} from '@/common/filter'
+
 
     export default {
         name: "Message",
         data() {
             return {
-                UserName: '',
-                Email: '',
-                Content: '',
                 list: [],
                 total: 0,
                 currentPage: 1
             }
         },
-        filters: {
-            myDate(val) {
-                return formate(val);
-            }
-        },
         components: {
-            Layout
+            Layout, PutMessage, CommentsList
         },
         mounted() {
             this._getMessage();
         },
         methods: {
-            handleClick() {
-                const msg = {UserName: this.UserName, Email: this.Email, Content: this.Content};
-                putMessage(msg).then(res => {
-                    console.log(res);
+            handleClick(form) {
+                // const msg = {UserName: this.UserName, Email: this.Email, Content: this.Content};
+                console.log(form);
+                putMessage(form).then(res => {
+
                     this._getMessage();
                     if (res.data.err_code == 0) {
                         Message({
@@ -134,57 +113,12 @@
         .message {
             width: 100%;
             background: #ffffff;
-
-            & > div {
-                margin: 10px;
-                padding: 10px 10px 10px 10px;
-                border-bottom: 1px solid #ececec;
-                flex-direction: row;
-                align-items: flex-start;
-                justify-content: flex-start;
-                display: flex;
-
-                .img {
-                    width: 60px;
-                    text-align: center;
-                }
-
-                div.text {
-                    flex: 1;
-
-                    p:first-child {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        color: #000000;
-
-                        .date {
-                            color: #999;
-                            font-size: 12px;
-                            overflow: hidden;
-                            white-space: nowrap;
-                        }
-                    }
-
-                    p:last-child {
-                        margin: 10px 0;
-                    }
-                }
-
-            }
-
             .pagination {
 
                 display: flex;
                 align-items: center;
                 justify-content: center;
 
-            }
-
-            .put-message {
-                .el-form {
-                    width: 100%;
-                }
             }
         }
     }

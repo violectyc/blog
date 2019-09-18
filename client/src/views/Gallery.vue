@@ -1,21 +1,27 @@
 <template>
-    <div class="gallery">gallery</div>
+    <div class="gallery">
+        <RouterView/>
+    </div>
 </template>
 
 <script>
+
+
     export default {
         name: "Gallery",
-        data(){
-            return{}
+        data() {
+            return {}
+        },
+        components: {
+
         }
     }
 </script>
 
 <style scoped lang="less">
-.gallery{
-    width: 1000px;
-    max-width: 1000px;
-    background: #ffffff;
-    margin: 0 auto;
-}
+    .gallery {
+        width: 1000px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
 </style>

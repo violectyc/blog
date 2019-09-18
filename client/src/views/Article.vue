@@ -1,6 +1,5 @@
 <template>
     <div class="article">
-
         <Layout>
             <template v-slot:right>
                 <Tags/>
@@ -8,9 +7,9 @@
             <template v-slot:left>
 
                 <ArticleList/>
+                <router-view/>
             </template>
         </Layout>
-        <router-view/>
     </div>
 
 </template>
@@ -28,9 +27,7 @@
         components: {
             Layout, Tags, ArticleList
         },
-        methods: {
-
-        }
+        methods: {}
     }
 </script>
 

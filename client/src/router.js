@@ -19,12 +19,29 @@ const router = new Router({
                     path: 'editor',
                     name: 'Editor',
                     component: () => import('./components/editor')
+                },
+                {
+                    path: 'article-detail',
+                    name: 'ArticleDetail',
+                    component: () => import('./components/article-detail')
                 }
             ]
         }, {
             path: '/gallery',
             name: 'Gallery',
-            component: () => import('./views/Gallery.vue')
+            component: () => import('./views/Gallery.vue'),
+            children: [
+                {
+                    path: 'put',
+                    name: 'PutGallery',
+                    component: () => import('./components/put-gallery')
+                },
+                {
+                    path:'detail',
+                    name:'GalleryDetail',
+                    component:()=>import('./components/gallery-detail')
+                }
+            ]
         }, {
             path: '/message',
             name: 'Message',
@@ -50,12 +67,8 @@ const router = new Router({
                     component: () => import('./components/user-info')
                 }
             ]
-        },
-        {
-            path: '/article-detail',
-            name: 'ArticleDetail',
-            component: () => import('./components/article-detail')
         }
+
     ]
 });
 export default router;

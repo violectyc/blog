@@ -3,10 +3,10 @@
         <Layout>
             <template v-slot:right>
                 <About v-if="userInfo"/>
-                <Gallery/>
+                <Gallery :list="recommendGallery" @toGalleyDetail="handleGalleryDetail"/>
                 <Search @keyword="handleSearch"/>
                 <Category/>
-                <Recommend/>
+                <Recommend :list="recommend"/>
             </template>
             <template v-slot:left>
                 <router-view/>
@@ -32,7 +32,7 @@
     import Category from '@/components/category'
     import Recommend from '@/components/recommend'
     import Gallery from '@/components/gallery'
-    import {current, getArticleList} from '@/service'
+    import {current, getArticleList, getRecommend, getRecommendGallery} from '@/service'
     import {Message} from 'element-ui'
     import {mapState} from "vuex";
     import {getSearch} from "../service";
@@ -45,11 +45,15 @@
                 total: 0,
                 currentPage: 1,
                 keyWord: '',
-                isSearch: false
+                isSearch: false,
+                recommend: [],
+                recommendGallery: []
             }
         },
         mounted() {
             this._getArticleList();
+            this._getRecommend();
+            this._getRecommendGallery();
         },
         computed: {
             ...mapState({
@@ -68,7 +72,6 @@
         methods: {
             _getCurrent() {
                 current().then(res => {
-                    console.log('home');
                     if (res.data.err_code * 1 == 0) {
                         this.$store.commit('setUser', res.data.data);
                         localStorage.setItem('userInfo', JSON.stringify(res.data.data));
@@ -93,16 +96,17 @@
             },
             handleCurrentChange(curPage) {
                 this.currentPage = curPage;
-
-                if (this.isSearch) {
-                    this._getArticleList();
-                } else {
-                    this._getSearch();
-                }
+                this._getArticleList();
+                // if (this.isSearch) {
+                //
+                // } else {
+                //     this._getSearch();
+                // }
             },
             toArticleDetail(article) {
-
-                this.$router.push({name: 'ArticleDetail', params: {article}})
+                this.$router.push({name: 'ArticleDetail'});
+                localStorage.setItem('articleId', article['_id']);
+                localStorage.setItem('userId', article['UserId']);
             },
             handleSearch(key) {
                 if (key === '') {
@@ -123,6 +127,32 @@
                         this.articleList = data;
                     }
                 })
+            },
+            _getRecommend() {
+                getRecommend().then(res => {
+                    const {err_code, data} = res.data;
+                    if (err_code * 1 === 0) {
+                        this.recommend = data;
+                    }
+                })
+            },
+            _getRecommendGallery() {
+                getRecommendGallery().then(res => {
+                    console.log(res);
+                    const {err_code, data, message} = res.data;
+                    if (err_code * 1 === 0) {
+                        this.recommendGallery = data;
+                    } else {
+                        Message({
+                            type: 'error',
+                            message: message
+                        });
+                    }
+                })
+            },
+            handleGalleryDetail(gallery) {
+                localStorage.setItem('gallery', JSON.stringify(gallery));
+                this.$router.push({name: 'GalleryDetail'});
             }
         }
     }

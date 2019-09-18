@@ -103,7 +103,8 @@
                 } else if (commend === 'writeArticle') {
                     this.$router.push('/article/editor');
                 } else if (commend === 'addGallery') {
-
+                    console.log('addGallery');
+                    this.$router.push('/gallery/put')
                 }
             }
         }

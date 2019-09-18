@@ -6,7 +6,7 @@
                 <p>{{item.Description}}</p>
             </div>
             <div class="img">
-                <img :src="item.ArticleImg" alt="个人博客从简不繁">
+                <img :src="item.ArticleImg" alt="个人博客从简不繁" :title="item.Title">
             </div>
         </li>
     </ul>

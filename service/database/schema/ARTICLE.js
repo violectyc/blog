@@ -33,6 +33,14 @@ const ArticleSchema = new Schema({
             type: String,
             default: ''
         },
+        ReadCount: {
+            type: Number,
+            default: 1
+        },
+        ThumbsUp: {
+            type: Number,
+            default: 1
+        },
         Created: {
             type: Date,
             default:

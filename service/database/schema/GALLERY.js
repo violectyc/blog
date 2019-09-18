@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const GallerySchema = new Schema({
-        GalleryId: {
-            type: String,
-            default: ''
-        },
         UserId: {
             type: String,
             default: ''
@@ -20,6 +16,18 @@ const GallerySchema = new Schema({
         Description: {
             type: String,
             default: ''
+        },
+        ImgList: {
+            type: Array,
+            default: [],
+        },
+        ReadCount: {
+            type: Number,
+            default: 1
+        },
+        ThumbsUp: {
+            type: Number,
+            default: 1
         },
         Created: {
             type: Date,

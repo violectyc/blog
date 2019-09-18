@@ -14,7 +14,7 @@
                             <router-link to="/article"  tag="a">文章</router-link>
                         </li>
                         <li>
-                            <router-link to="/gallery" exact tag="a">相册</router-link>
+                            <router-link to="/gallery"  tag="a">相册</router-link>
                         </li>
                         <li>
                             <router-link to="/message" exact tag="a">留言</router-link>

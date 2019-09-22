@@ -6,20 +6,10 @@
                 <Gallery :list="recommendGallery" @toGalleyDetail="handleGalleryDetail"/>
                 <Search @keyword="handleSearch"/>
                 <Category/>
-                <Recommend :list="recommend"/>
+                <Recommend :list="recommendArticle"/>
             </template>
             <template v-slot:left>
                 <router-view/>
-                <ArticleList :list="articleList" @handleDetail="toArticleDetail"/>
-                <div class="pagination">
-                    <el-pagination
-                            background
-                            @current-change="handleCurrentChange"
-                            layout="prev, pager, next"
-                            :page-size="5"
-                            :total="total">
-                    </el-pagination>
-                </div>
             </template>
         </Layout>
     </div>
@@ -27,12 +17,11 @@
 <script>
     import Layout from '@/components/layout'
     import About from '@/components/about'
-    import ArticleList from '@/components/article-list'
     import Search from '@/components/search'
     import Category from '@/components/category'
     import Recommend from '@/components/recommend'
     import Gallery from '@/components/gallery'
-    import {current, getArticleList, getRecommend, getRecommendGallery} from '@/service'
+    import {current, getRecommend, getRecommendGallery} from '@/service'
     import {Message} from 'element-ui'
     import {mapState} from "vuex";
     import {getSearch} from "../service";
@@ -41,29 +30,24 @@
         name: 'home',
         data() {
             return {
-                articleList: [],
-                total: 0,
-                currentPage: 1,
                 keyWord: '',
                 isSearch: false,
-                recommend: [],
-                recommendGallery: []
             }
         },
         mounted() {
-            this._getArticleList();
             this._getRecommend();
             this._getRecommendGallery();
         },
         computed: {
             ...mapState({
-                userInfo: 'userInfo'
+                userInfo: 'userInfo',
+                recommendGallery: 'recommendGallery',
+                recommendArticle:'recommendArticle'
             })
         },
         components: {
             Layout,
             About,
-            ArticleList,
             Search,
             Category,
             Recommend,
@@ -72,41 +56,11 @@
         methods: {
             _getCurrent() {
                 current().then(res => {
-                    if (res.data.err_code * 1 == 0) {
+                    if (res.data.err_code * 1 === 0) {
                         this.$store.commit('setUser', res.data.data);
                         localStorage.setItem('userInfo', JSON.stringify(res.data.data));
-
                     }
                 })
-            },
-            _getArticleList() {
-                getArticleList({currentPage: this.currentPage}).then(res => {
-
-                    const {err_code, message, data, total} = res.data;
-                    if (err_code * 1 === 0) {
-                        this.articleList = data;
-                        this.total = total;
-                    } else {
-                        Message({
-                            type: 'success',
-                            message: message
-                        });
-                    }
-                });
-            },
-            handleCurrentChange(curPage) {
-                this.currentPage = curPage;
-                this._getArticleList();
-                // if (this.isSearch) {
-                //
-                // } else {
-                //     this._getSearch();
-                // }
-            },
-            toArticleDetail(article) {
-                this.$router.push({name: 'ArticleDetail'});
-                localStorage.setItem('articleId', article['_id']);
-                localStorage.setItem('userId', article['UserId']);
             },
             handleSearch(key) {
                 if (key === '') {
@@ -132,7 +86,8 @@
                 getRecommend().then(res => {
                     const {err_code, data} = res.data;
                     if (err_code * 1 === 0) {
-                        this.recommend = data;
+                        this.$store.commit('setRecommendArticle', data);
+                        localStorage.setItem('recommendArticle', JSON.stringify(data))
                     }
                 })
             },
@@ -141,7 +96,9 @@
                     console.log(res);
                     const {err_code, data, message} = res.data;
                     if (err_code * 1 === 0) {
-                        this.recommendGallery = data;
+                        // this.recommendGallery = data;
+                        this.$store.commit('setRecommendGallery', data);
+                        localStorage.setItem('recommendGallery', JSON.stringify(data))
                     } else {
                         Message({
                             type: 'error',
@@ -151,7 +108,7 @@
                 })
             },
             handleGalleryDetail(gallery) {
-                localStorage.setItem('gallery', JSON.stringify(gallery));
+                localStorage.setItem('galleryId', gallery['_id']);
                 this.$router.push({name: 'GalleryDetail'});
             }
         }
@@ -159,10 +116,6 @@
 </script>
 <style lang="less" scoped>
     .home {
-        .pagination {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+
     }
 </style>

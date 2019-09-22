@@ -20,4 +20,9 @@ export const getComments = id => axios.get('/comment', {params: id});
 
 
 export const putGallery = gallery => axios.post('/gallery/put', gallery);
-export const getRecommendGallery = ()=>axios.post('/gallery/recommend');
+export const getRecommendGallery = () => axios.post('/gallery/recommend');
+export const updateGalleryThumb = id => axios.get('/gallery/thumbCount', {params: id});
+
+export const galleryDetail = id => axios.get('/gallery/detailById', {params: id});
+
+export const galleryList = page => axios.get('/gallery/list', {params: page});

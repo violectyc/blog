@@ -17,24 +17,27 @@ const app = express();
 app.use(cors());
 /*check token*/
 app.use(function (req, res, next) {
-    console.log(req.originalUrl);
     const url = req.originalUrl;
-    if (url == '/user/current') {
+    console.log(url);
+    if (url.includes('/user/current') || url.includes('/gallery/put') || url.includes('/article/add')) {
         const token = req.get('Authorization');
         jwt.verify(token, key, (err, decode) => {
-            if (err) {
-                res.status(401).send({
-                    err_code: -2,
-                    message: '身份识别过期,请重新登陆'
-                });
-            } else {
-                console.log('token验证中');
-                next();
+            if (!err) {
+                const dateline = Date.now() / 1000;
+                console.log(dateline - decode.exp);
+                if (decode.exp > dateline) {
+                    next();
+                    console.log('token验证通过');
+                } else {
+                    res.status(401).send({
+                        err_code: -2,
+                        message: '身份识别过期,请重新登陆'
+                    });
+                }
             }
         });
     } else {
         next();
-        console.log('无需验证token');
     }
 });
 app.use(logger('dev'));

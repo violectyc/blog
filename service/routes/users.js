@@ -23,7 +23,7 @@ router.post('/register', async (req, res, next) => {
     });
     await Model.save().then(d => {
         const token = jwt.sign({
-            exp: Number(Math.floor(Date.now() / 1000) + (60 * 60).toFixed()),
+            exp: Date.now() / 1000 + (60 * 60),
             data: [username, d['_id']]
         }, secretOrPrivateKey);
         res.send({
@@ -46,7 +46,7 @@ router.post('/login', async (req, res, next) => {
         let result = await User.findOne({UserName: username}).exec();
         const secretOrPrivateKey = key;
         const token = jwt.sign({
-            exp: Number(Math.floor(Date.now() / 1000) + (60 * 60).toFixed()),
+            exp: Date.now() / 1000 + 60*1,
             data: [username, result['_id']]
         }, secretOrPrivateKey);
         if (result['Password'] != md5(password)) {
@@ -94,7 +94,6 @@ router.post('/update', async (req, res, next) => {
     try {
         const token = req.get('Authorization');
         const dcode = jwt.decode(token, {complete: true});
-        console.log(dcode);
         const id = dcode.payload.data[1];
         const {username, nickname, password, email, description, avatar} = req.body;
         const Model = {
@@ -104,7 +103,6 @@ router.post('/update', async (req, res, next) => {
             Description: description,
             Avatar: avatar
         };
-        console.log(Model);
         if (password !== '') {
             Model['Password'] = md5(password)
         }

@@ -7,10 +7,9 @@ const {baseUrl} = require('../config');
 /*查询博客*/
 router.post('/', async (req, res, next) => {
     try {
-        let pageSize = 5;
+        let pageSize = 10;
         let currentPage = parseInt(req.body.currentPage) - 1;
-        let skipPage = currentPage * 5;
-        console.log(req.body.currentPage);
+        let skipPage = currentPage * pageSize;
         const total = await Article.count();
         const result = await Article.find({}, {Content: 0}).skip(skipPage).limit(pageSize).sort({Created: -1}).exec();
         result.forEach(item => {

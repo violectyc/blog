@@ -9,12 +9,24 @@ const router = new Router({
             path: '/',
             name: 'Home',
             component: () => import('./views/Home.vue'),
+            children:[
+                {
+                    path:'',
+                    name:'ArticleList',
+                    component:()=>import('./components/article-list')
+                }
+            ]
         },
         {
             path: '/article',
             name: 'Article',
             component: () => import('./views/Article.vue'),
             children: [
+                {
+                    path:'',
+                    name:'ArticleList',
+                    component:()=>import('./components/article-list')
+                },
                 {
                     path: 'editor',
                     name: 'Editor',
@@ -30,7 +42,11 @@ const router = new Router({
             path: '/gallery',
             name: 'Gallery',
             component: () => import('./views/Gallery.vue'),
-            children: [
+            children: [{
+                path:'',
+                name:'GalleryList',
+                component:()=>import('./components/gallery-list')
+            },
                 {
                     path: 'put',
                     name: 'PutGallery',

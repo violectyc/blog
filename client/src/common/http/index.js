@@ -7,7 +7,6 @@ axios.defaults.baseURL = "http://localhost:3000";
 // 请求拦截
 axios.interceptors.request.use(
     config => {
-        console.log(config);
         if (localStorage.eleToken) {
             // 设置统一的请求头
             config.headers.Authorization = localStorage.eleToken;
@@ -17,7 +16,6 @@ axios.interceptors.request.use(
         } else {
 
         }
-
         return config;
     },
     error => {
@@ -37,7 +35,7 @@ axios.interceptors.response.use(
             // 清除token
             localStorage.removeItem("eleToken");
             store.commit('setUser', null);
-            router.push('/login');
+            router.push('/about/login');
         }
         return Promise.reject(error);
     }

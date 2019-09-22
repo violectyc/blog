@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const ext = path.extname(file.originalname);
-        cb(null, file.fieldname + '-' + Date.now() + ext)
+        cb(null, file.fieldname + '-' + Date.now() + Math.floor(Math.random() * 100) + ext)
     }
 })
 const upload = multer({storage})

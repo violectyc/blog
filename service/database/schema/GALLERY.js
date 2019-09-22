@@ -5,6 +5,10 @@ const GallerySchema = new Schema({
             type: String,
             default: ''
         },
+        UserName: {
+            type: String,
+            default: ''
+        },
         Title: {
             type: String,
             default: ''

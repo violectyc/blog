@@ -24,6 +24,7 @@
 <script>
     import ImgUpload from '@/components/img-upload'
     import {putGallery} from '@/service'
+    import {Message} from "element-ui";
 
     export default {
         name: "putGallery",
@@ -72,7 +73,14 @@
                     ImgList: this.ImgList,
                     UserId: this.UserId
                 }).then(res => {
-                    console.log(res);
+                    const {err_code, message} = res.data;
+                    if (err_code * 1 === 0) {
+
+                        this.$router.push('/gallery');
+
+                    } else {
+                        Message({type: 'error', message: message});
+                    }
                 });
             }
         }
@@ -83,5 +91,6 @@
     .put-gallery {
         box-sizing: border-box;
         padding: 30px 10px;
+        background: #ffffff;
     }
 </style>

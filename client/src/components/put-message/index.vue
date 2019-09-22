@@ -1,5 +1,5 @@
 <template>
-    <div class="message">
+    <div class="p-message">
         <div class="put-message">
             <el-form ref="form" label-width="80px">
                 <el-form-item label="您的姓名">
@@ -46,12 +46,13 @@
 </script>
 
 <style scoped lang="less">
-    .message {
+    .p-message {
         box-sizing: border-box;
         margin: 10px 0;
-
         .put-message {
+            box-sizing: border-box;
             width: 100%;
+            padding: 10px;
         }
     }
 </style>
